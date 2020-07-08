@@ -30,7 +30,7 @@ int main() {
    return 0;
 }
 
-int bSearch(int N, int key) {	//ÂüÀÌ¸é 1, °ÅÁşÀÌ¸é 0
+int bSearch(int N, int key) {	//ì°¸ì¼ ë•Œ 1, ê±°ì§“ì¼ ë•Œ 0
    int low = 0;
    int high = N - 1;
    int mid;
