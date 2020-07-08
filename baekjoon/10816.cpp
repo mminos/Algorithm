@@ -3,8 +3,6 @@
 
 using namespace std;
 
-int bSearch(int N, int key);
-
 int arrN[100001];
 int arrM[100001];
 
@@ -23,37 +21,7 @@ int main() {
     sort(arrN, arrN + N);
 
     for (int i = 0; i < M; i++)
-        printf("%d ", bSearch(N, arrM[i]));
+        printf("%d ", upper_bound(arrN, arrN + N, arrM[i]) - lower_bound(arrN, arrN + N, arrM[i]));
 
-    return 0;
-}
-
-int bSearch(int N, int key) {
-    int low = 0;
-    int high = N - 1;
-    int mid;
-    int count = 0;
-
-    while (low <= high) {
-        mid = (low + high) / 2;
-
-        if (arrN[mid] == key) {
-            for (int i = mid; i >= low; i--) {
-                if (arrN[i] == key)
-                    count++;
-            }
-
-            for (int i = mid; i <= high; i++) {
-                if (arrN[i] == key)
-                    count++;
-            }
-
-            return --count;
-        }
-        else if (arrN[mid] > key)
-            high = mid - 1;
-        else
-            low = mid + 1;
-    }
     return 0;
 }
