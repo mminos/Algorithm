@@ -1,33 +1,33 @@
-#include<iostream>
-#include<cstdlib>
-using namespace std;
+#include <stdio.h>
+#include <stdlib.h>
 
-int N;
-int col[15];
-int count;
+bool promising(int n);
+void nQueen(int n);
 
-bool promising(int i){
-  for(int j=0;j<i;j++){
-    if(col[j] == col[i] || abs(col[i]-col[j]) == (i - j))
-      return false;
-  }
-  return true;
+int queen[15];
+int num, cnt;
+
+int main(void) {
+        scanf("%d", &num);
+
+        nQueen(0);
+        printf("%d", cnt);
+        return 0;
 }
 
-void NQueen(int i){
-  if(i==N)count++;
-  else{
-    for(int j=0;j<N;j++){
-      col[i]=j;
-      if(promising(i))
-        NQueen(i+1);
-    }
-  }
+bool promising(int n) {
+        for (int i = 0; i < n; i++) 
+                if (queen[i] == queen[n] || abs(queen[i] - queen[n]) == abs(i - n)) 
+                        return false;
+        return true;
 }
 
-int main(){
-  cin>>N;
-  NQueen(0);
-  cout<<count<<"\n";
-  return 0;
+void nQueen(int n) {
+        if (n == num) cnt++;
+        else {
+                for (int i = 0; i < num; i++) {
+                        queen[n] = i;
+                        if (promising(n)) nQueen(n + 1);
+                }
+        }
 }
