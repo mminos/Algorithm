@@ -5,82 +5,51 @@ typedef struct {
         int x;
         int y;
         int cnt;
-        bool pos;
+        int block;
 } DEF;
 
 queue<DEF> bfs;
-int N, M, MIN = INT_MAX;
-char arr[1000][1000];
-bool visited[2][1000][1000];
+int M, N, MIN = INT_MAX;
+int moveX[4] = {0, 0, 1, -1};
+int moveY[4] = {1, -1, 0, 0};
+bool visited[1001][1001][2];
+char graph[1001][1001];
 
 int main(void) {
-        scanf("%d %d\n", &N, &M);
-        for (int i = 0; i < N; i++) {
-                for (int j = 0; j < M; j++)
-                        scanf("%c", &arr[i][j]);
-                getchar();
-        }
-        N--, M--;
-
-        bfs.push({0, 0, 1, true});
-        visited[1][0][0] = true;
-
+        scanf("%d %d", &N, &M);
+        for (int i = 1; i <= N; i++)
+                scanf("%s", &graph[i][1]);
+        
+        bfs.push({1, 1, 1, 1});
+        visited[1][1][1] = true;
         while (!bfs.empty()) {
                 auto a = bfs.front();
-                int x  = a.x, y = a.y, cnt = a.cnt;
-                bool pos = a.pos;
+                int x = a.x, y = a.y, cnt = a.cnt, block = a.block;
                 bfs.pop();
 
                 if (x == N && y == M) {
                         MIN = min(MIN, cnt);
-                        continue;
+                        break;
                 }
 
-                if (cnt > MIN) continue;
+                for (int i = 0; i < 4; i++) {
+                        int nx = x + moveX[i];
+                        int ny = y + moveY[i];
 
-                if (x > 0 && !visited[pos][x - 1][y]) {
-                        if (arr[x - 1][y] == '1' && pos) {
-                                visited[pos][x - 1][y] = true;
-                                bfs.push({x - 1, y, cnt + 1, false});
-                        }
-                        else if (arr[x - 1][y] == '0') {
-                                visited[pos][x - 1][y] = true;
-                                bfs.push({x - 1, y, cnt + 1, pos});
-                        }
-                }
-                if (y > 0 && !visited[pos][x][y - 1]) {
-                        if (arr[x][y - 1] == '1' && pos) {
-                                visited[pos][x][y - 1] = true;
-                                bfs.push({x, y - 1, cnt + 1, false});
-                        }
-                        else if (arr[x][y - 1] == '0') {
-                                visited[pos][x][y - 1] = true;
-                                bfs.push({x, y - 1, cnt + 1, pos});
-                        }
-                }
-                if (x < N && !visited[pos][x + 1][y]) {
-                        if (arr[x + 1][y] == '1' && pos) {
-                                if (x + 1 != N || y != M) visited[pos][x + 1][y] = true;
-                                bfs.push({x + 1, y, cnt + 1, false});
-                        }
-                        else if (arr[x + 1][y] == '0') {
-                                if (x + 1 != N || y != M) visited[pos][x + 1][y] = true;
-                                bfs.push({x + 1, y, cnt + 1, pos});
-                        }
-                }
-                if (y < M && !visited[x][y + 1]) {
-                        if (arr[x][y + 1] == '1' && pos) {
-                                if (x != N || y + 1 != M) visited[pos][x][y + 1] = true;
-                                bfs.push({x, y + 1, cnt + 1, false});
-                        }
-                        else if (arr[x][y + 1] == '0') {
-                                if (x != N || y + 1 != M) visited[pos][x][y + 1] = true;
-                                bfs.push({x, y + 1, cnt + 1, pos});
+                        if (nx >= 1 && nx <= N && ny >= 1 && ny <= M) {
+                                if (graph[nx][ny] == '1' && block) {
+                                        visited[nx][ny][block - 1] = true;
+                                        bfs.push({nx, ny, cnt + 1, block - 1});
+                                }
+
+                                if (graph[nx][ny] == '0' && visited[nx][ny][block] == false) {
+                                        visited[nx][ny][block] = true;
+                                        bfs.push({nx, ny, cnt + 1, block});
+                                }
                         }
                 }
         }
+
         if (MIN == INT_MAX) printf("-1");
         else printf("%d", MIN);
-        
-        return 0;
 }
