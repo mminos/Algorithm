@@ -22,10 +22,10 @@ bool cmp(_circle a, _circle b) {
         return a.r > b.r;
 }
 
-int check_circle(int a, int b) {        // 0 = bê°€ aì˜ ì™¸ë¶€
-                                        // 1 = bê°€ aì˜ ì™¸ë¶€ (ë™ì‹¬ì›) / aê°€ bì˜ ë‚´ë¶€ / ë‚˜ì˜¬ ìˆ˜ ì—†ìŒ
-                                        // 2 = bê°€ aì˜ ë‚´ë¶€
-                                        // -1 = ë§Œë‚  ê²½ìš° ì…ë ¥ ì—ëŸ¬
+int check_circle(int a, int b) {        // 0 = b°¡ aÀÇ ¿ÜºÎ
+                                        // 1 = b°¡ aÀÇ ¿ÜºÎ (µ¿½É¿ø) / a°¡ bÀÇ ³»ºÎ
+                                        // 2 = b°¡ aÀÇ ³»ºÎ
+                                        // -1 = ¸¸³¯ °æ¿ì ÀÔ·Â ¿¡·¯
         int x1 = circle[a].x, x2 = circle[b].x;
         int y1 = circle[a].y, y2 = circle[b].y;
         int r1 = circle[a].r, r2 = circle[b].r;
